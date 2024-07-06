@@ -1,0 +1,142 @@
+body {
+  /* body 기본 속성이 margin:8px */
+  margin: 0;
+  /* 이미지 기본 크기가 있기 때문에 높이를 맞춰 줘야 함!! vh == 전체 화면에 맞게 하는 것 */
+  height: 100vh;
+  /* 백그라운드 사진을 이미지 폴더에 있는 백그라운드 사진을 불러온다 (주소값 불러옴) */
+  background-image: url('images/background.jpg');
+  /* 사이즈가 안 맞아 사진이 반복됨. 이걸 방지 */
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container {
+  background-color: rgb(246, 246, 239);
+  /* input-area가 화면에 맞는 크기가 될 수 있도록 함 */
+  /* 최소한의 높이가 100vh */
+  min-height: 100vh; /*내가 보는 이 화면의 높이만큼 (vh)*/
+  width: 50em;
+
+  /* 박스에 섀도우를 좀 주고 싶으면!! box shadow css 검색 후 복붙 */
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+/* .task-area {
+  border: 1px solid lightgray;
+  /* width: 500px;
+  border-color: black;
+} */
+
+/* position: relative를 under-line의 부모인 task-tabs에 줄 것 
+>> 그래야 position: absolute의 기준점이 task tab이 됨*/
+.task-tabs {
+  display: flex;
+  border-bottom: 1px solid rgb(57, 131, 67);
+  /* 밑에 task와 나누는 줄을 긋기 위해서!! */
+
+  position: relative;
+}
+
+/* task-tabs 아래에 있는 div에 공간을 주겠다 */
+.task-tabs div {
+  padding: 0.9em;
+}
+
+/* 아이디로 줬기 때문에 # 
+탭이 커서를 옮길 때마다 움직여야 해서 자바 스크립트에서 많이 쓰임*/
+#under-line {
+  height: 4px;
+  background-color: rgb(60, 168, 75);
+  position: absolute; /*절대값 기준: (0,0)에서 시작*/
+  width: 85px; /*넓이*/
+  left: 0px;
+  top: 64px;
+  padding: 0px;
+}
+
+.task {
+  display: flex;
+  /* 거리를 벌려놔야 함!!! */
+  justify-content: space-between; /*사이 간격을 띄운다*/
+  padding: 0.8em;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.task-done {
+  text-decoration: line-through; /*선 긋는 것*/
+}
+
+.task-tabs div {
+  cursor: pointer; /*task-tabs의 div 태그에 포인터 적용*/
+  /* font-family: 'Cafe24Meongi-B-v1.0';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 2em; */
+  word-spacing: 7px;
+}
+
+@font-face {
+  font-family: 'NeoDunggeunmoPro-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.input-area {
+  position: relative;
+  border: 2px solid lightgray;
+  height: 50%;
+  /* top: 10px;
+  border: 10em;
+  width: 39%;
+  height: 2.4em; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputStyle {
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.add {
+  border: none;
+  background: none;
+  outline: none;
+  text-align: right;
+}
+
+/* .title {
+  font-family: 'Cafe24Meongi-B-v1.0';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 3.3em;
+  margin-left: 0.2em;
+} */
+
+.addSytle {
+  border: 1.2em;
+  height: 1.2em;
+  width: 1.2em;
+  /* border-color: bisque; */
+  /* background-color: rgb(119, 182, 143); */
+  border-top: 50%;
+}
+
+.checkbtn {
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.deletebtn {
+  border: none;
+  background: none;
+  outline: none;
+}
