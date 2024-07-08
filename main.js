@@ -20,14 +20,43 @@ let taskList = []; //할 일을 추가할 배열
 let tabs = document.querySelectorAll('.task-tabs div'); //task-tabs 아래에 있는 div를 다 가져옴
 let mode = 'all'; //처음 값은 항상 '모두 탭'이므로 초기값 설정 또한 all로 함
 let filterList = [];
-let underLine = document.getElementById('under-line');
 addButton.addEventListener('click', addTask);
 
+//DOMContentLoaded 이벤트: HTML 문서가 완전히 로드되면 실행되는 이벤트
+//이벤트가 발생하면 자바스크립트 코드 실행됨
+document.addEventListener('DOMContentLoaded', function () {
+  //task-tabs 클래스 내부의 모든 div 요소를 선택
+  const tabs = document.querySelectorAll('.task-tabs div');
+
+  //각 탭에 대해 클릭 이벤트 추가
+  //forEach 메서드: 'tabs' NodeList의 각 요소에 대해 반복하여 클릭 이벤트 추가
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', function (event) {
+      filter(event); //필요한 경우 탭 클릭 시 동작할 함수 호출
+
+      //모든 탭에서 active 클래스 제거
+      tabs.forEach((t) => t.classList.remove('active'));
+
+      //클릭한 탭에 active 클래스 추가
+      event.target.classList.add('active');
+    });
+  });
+});
+
+//엔터 키 입력 이벤트 추가
+taskInput.addEventListener('keyup', function (event) {
+  if (event.key === 'Enter') {
+    //사용자가 엔터 키를 누르면
+    addTask(); //addTask 함수 실행
+  }
+});
+
 //click 이벤트를 주고 싶은 건 인덱스 1부터 시작
-for (let i = 1; i < tabs.length; i++) {
+//각 탭에 click 이벤트 추가
+for (let i = 0; i < tabs.length; i++) {
   //event 태그 주고 넘기기 (tab 같은 경우 내가 무슨 탭을 선택했는지 알아야 하기 때문)
   tabs[i].addEventListener('click', function (event) {
-    filter(event);
+    filter(event); //탭 클릭 시 filter 함수 실행
   });
 }
 
@@ -44,6 +73,8 @@ function addTask() {
   taskList.push(task);
   console.log(task);
   render();
+  taskInput.value = ''; //할 일 추가 후 입력 필드 초기화
+  //value 속성을 빈 문자열로 설정하면 됨!!!
 }
 
 //그림을 그려 주는 건 render로 처리 (UI 담당)
@@ -73,8 +104,8 @@ function render() {
       resultHTML += `<div class="task">
             <div class='task-done'>${list[i].taskContent}</div>
             <div>
-              <button onclick="toggleComplete('${list[i].id}')" class="checkbtn">완료</button>
-              <button onclick="deleteTask('${list[i].id}')" class="deletebtn">삭제</button>
+              <button onclick="toggleComplete('${list[i].id}')" class="checkbtn">fin!</button>
+              <button onclick="deleteTask('${list[i].id}')" class="deletebtn">del</button>
             </div>
           </div>`;
     } else {
@@ -82,8 +113,8 @@ function render() {
       resultHTML += `<div class="task">
             <div>${list[i].taskContent}</div>
             <div>
-              <button onclick="toggleComplete('${list[i].id}')" class="checkbtn">체크</button>
-              <button onclick="deleteTask('${list[i].id}')" class="deletebtn">삭제</button>
+              <button onclick="toggleComplete('${list[i].id}')" class="checkbtn">check</button>
+              <button onclick="deleteTask('${list[i].id}')" class="deletebtn">del</button>
             </div>
           </div>`;
     } //button에 click 이벤트를 주는 2가지 방식
@@ -109,29 +140,43 @@ function toggleComplete(id) {
       break; //아이템 하나 찾았으면 더 이상 찾을 필요 없으므로 종료
     }
   }
+  updateFilterList(); //toggleComplete 후 filterList 업데이트
   render();
   console.log(taskList);
 }
 
+//deleteTask 함수에서는 taskList에서 할 일을 삭제한 후에 updateFilterList() 함수 호출하여 filterList를 업데이트함
+//이렇게 함으로써 현재 선택된 탭에 따라 필터된 목록이 제대로 유지됨
 function deleteTask(id) {
   //array에 있는 아이템 삭제 방법 splice(시작점, 몇 개의 아이템)
   //인덱스 값을 알아야 함
   for (let i = 0; i < taskList.length; i++) {
-    if (taskList[i].id == id) {
+    if (taskList[i].id === id) {
       taskList.splice(i, 1); //i번째에 있는 아이템 하나만 삭제
       break;
     }
   }
-  render(); //값의 업데이트가 있으면 ui도 업데이트 해 줘야
-  console.log(taskList);
+  /*render(); //값의 업데이트가 있으면 ui도 업데이트 해 줘야
+  console.log(taskList);*/
+  updateFilterList();
+  render();
 }
 
 //매개변수로 받는 event: 내가 뭘 클릭했는지에 대한 정보를 가지고 있음
+//updateFilterList() 호출하여 선택된 탭에 따라 filterList 업데이트함 >> 모든 탭에서 할 일을 필터링하여 보여주기 위해 필요
 function filter(event) {
   //event.target : event에서 내가 타겟한 게 무엇인지 알려 줌 (태그 전체를 들고 옴)
   //event.target.id : 타겟의 아이디 값만 들고 올 수 있음
   /*let*/ mode = event.target.id; //render()에서도 써야 해서 지역 변수 X, 전역 변수로 선언해 줘야 함
-  /*let*/ filterList = []; //filter된 리스트 생성 (지역 변수이기 때문에 전역 변수로 변경)
+  // /*let*/ filterList = []; //filter된 리스트 생성 (지역 변수이기 때문에 전역 변수로 변경)
+  updateFilterList();
+  render();
+}
+
+//현재 선택된 mode에 따라 filterList를 업데이트함
+//각 탭에 맞는 할 일을 filterList에 복사하거나 추가하여 보여 줌
+function updateFilterList() {
+  filterList = []; //filterList 초기화
 
   if (mode === 'all') {
     //전체 리스트 보여 줌

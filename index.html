@@ -12,6 +12,10 @@
     />
     <!-- 부트 스트랩에서 가지고 온 게 style.css 아래에 있으면 다 덮어씌워버림 -->
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fontawesome.com/icons/plus?f=classic&s=solid"
+    />
 
     <!-- <style> -->
     <!-- h1 { -->
@@ -43,8 +47,8 @@
           class="inputStyle"
           placeholder="오늘도 활기찬 하루!"
         />
-        <div class="addSytle">
-          <button id="add-button" class="add">+</button>
+        <div class="addStyle">
+          <button id="add-button" class="add">☘︎</button>
         </div>
       </section>
 
@@ -53,21 +57,23 @@
         <!-- tab이 들어갈 것
         가로로 나열하고 싶으면 display:flex; >> 부모 태그에 적용해야 함-->
         <div class="task-tabs">
-          <div id="under-line"></div>
-          <div id="all">전체</div>
+          <!-- <div id="under-line"></div> -->
+          <div id="all" class="active">전체</div>
           <div id="ongoing">진행 중</div>
           <div id="done">완료</div>
         </div>
 
         <!-- 각각의 task들이 들어갈 것 -->
-        <div id="task-board">
-          <button class="fa-regular fa-circle-check"></button>
-        </div>
+        <div id="task-board"></div>
       </section>
     </div>
     <script
       async
       src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/9d44ebfa48.js"
       crossorigin="anonymous"
     ></script>
     <script src="main.js"></script>

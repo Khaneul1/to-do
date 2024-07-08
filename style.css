@@ -14,8 +14,13 @@ body {
   background-color: rgb(246, 246, 239);
   /* input-area가 화면에 맞는 크기가 될 수 있도록 함 */
   /* 최소한의 높이가 100vh */
-  min-height: 100vh; /*내가 보는 이 화면의 높이만큼 (vh)*/
+  border-radius: 3em;
+  min-height: 80vh; /*내가 보는 이 화면의 높이만큼 (vh)*/
   width: 50em;
+  text-align: center;
+  margin-top: 10%;
+  padding-top: 3.5%;
+  line-height: 190%;
 
   /* 박스에 섀도우를 좀 주고 싶으면!! box shadow css 검색 후 복붙 */
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
@@ -33,28 +38,23 @@ body {
 >> 그래야 position: absolute의 기준점이 task tab이 됨*/
 .task-tabs {
   display: flex;
-  border-bottom: 1px solid rgb(57, 131, 67);
+  border-bottom: 1px solid darkolivegreen;
   /* 밑에 task와 나누는 줄을 긋기 위해서!! */
 
   position: relative;
 }
 
-/* task-tabs 아래에 있는 div에 공간을 주겠다 */
-.task-tabs div {
-  padding: 0.9em;
-}
-
 /* 아이디로 줬기 때문에 # 
 탭이 커서를 옮길 때마다 움직여야 해서 자바 스크립트에서 많이 쓰임*/
-#under-line {
+/* #under-line {
   height: 4px;
   background-color: rgb(60, 168, 75);
-  position: absolute; /*절대값 기준: (0,0)에서 시작*/
-  width: 85px; /*넓이*/
+  position: absolute; //절대값 기준: (0,0)에서 시작
+  width: 85px; //넓이
   left: 0px;
   top: 64px;
   padding: 0px;
-}
+}*/
 
 .task {
   display: flex;
@@ -70,6 +70,12 @@ body {
   text-decoration: line-through; /*선 긋는 것*/
 }
 
+.task-tabs > .active {
+  display: flex;
+}
+/* .task-tabs의 자식 요소 중 .active 클래스를 가진 요소들을 선택함 */
+/* 이후, .active 클래스 내부의 각 탭 요소들에 대해 추가 스타일을 정함 */
+/* > 기호: 자식 요소 선택자 .task-tabs > .active > div*/
 .task-tabs div {
   cursor: pointer; /*task-tabs의 div 태그에 포인터 적용*/
   /* font-family: 'Cafe24Meongi-B-v1.0';
@@ -77,6 +83,12 @@ body {
   font-style: normal;
   font-size: 2em; */
   word-spacing: 7px;
+  padding: 0.9em; /* task-tabs 아래에 있는 div에 공간을 주겠다 */
+  color: black;
+}
+
+.task-tabs .active {
+  color: darkolivegreen;
 }
 
 @font-face {
@@ -91,6 +103,7 @@ body {
   position: relative;
   border: 2px solid lightgray;
   height: 50%;
+  /* width: 500px; */
   /* top: 10px;
   border: 10em;
   width: 39%;
@@ -110,6 +123,7 @@ body {
   background: none;
   outline: none;
   text-align: right;
+  color: darkolivegreen;
 }
 
 /* .title {
@@ -120,7 +134,7 @@ body {
   margin-left: 0.2em;
 } */
 
-.addSytle {
+.addStyle {
   border: 1.2em;
   height: 1.2em;
   width: 1.2em;
